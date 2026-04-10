@@ -57,3 +57,9 @@ variable "ansible_public_key" {
   description = "Ansible public key"
   type        = string
 }
+
+variable "tags" {
+  description = "Additional tags to apply to the LXC"
+  type        = list(string)
+  default     = []
+}

@@ -31,7 +31,7 @@ locals {
 
 resource "proxmox_virtual_environment_container" "base_lxc" {
   node_name = var.node_name
-  tags      = ["terraform", var.size]
+  tags      = concat(["terraform", var.size], var.tags)
 
   cpu {
     cores = local.presets[var.size].cpu
