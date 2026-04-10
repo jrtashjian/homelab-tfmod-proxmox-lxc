@@ -99,6 +99,6 @@ resource "proxmox_virtual_environment_file" "debian_container_template" {
   node_name    = var.node_name
 
   source_file {
-    path = "http://download.proxmox.com/images/system/debian-12-standard_12.2-1_amd64.tar.zst"
+    path = "http://download.proxmox.com/images/system/debian-13-standard_13.1-2_amd64.tar.zst"
   }
 }
