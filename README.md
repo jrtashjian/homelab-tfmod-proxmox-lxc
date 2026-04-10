@@ -1,6 +1,6 @@
 # Proxmox LXC Module
 
-Terraform module to create reproducible Debian 12 LXC containers on Proxmox with preset sizes.
+Terraform module to create reproducible Debian LXC containers on Proxmox with preset sizes.
 
 ## Usage
 
