@@ -50,6 +50,7 @@ resource "proxmox_virtual_environment_container" "base_lxc" {
       volume = mount_point.value.volume
       size   = mount_point.value.size
       path   = mount_point.value.path
+      backup = true
     }
   }
 
