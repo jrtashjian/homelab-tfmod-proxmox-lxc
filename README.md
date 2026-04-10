@@ -28,33 +28,44 @@ module "lxc" {
 
 ## Available Sizes
 
-**Standard**
-- `nano`   → 1 vCPU, 1 GB RAM
-- `small`  → 1 vCPU, 2 GB RAM
-- `medium` → 2 vCPU, 4 GB RAM
-- `large`  → 4 vCPU, 8 GB RAM
-- `xlarge` → 6 vCPU, 16 GB RAM
+### Standard
 
-**High Memory**
-- `highmem-medium` → 2 vCPU, 24 GB RAM
-- `highmem-large`  → 4 vCPU, 48 GB RAM
+| Size     | CPU | RAM    | Root Disk |
+|----------|-----:|-------:|----------:|
+| `nano`   | 1    | 1 GB   | 8 GB      |
+| `small`  | 1    | 2 GB   | 8 GB      |
+| `medium` | 2    | 4 GB   | 12 GB     |
+| `large`  | 4    | 8 GB   | 16 GB     |
+| `xlarge` | 6    | 16 GB  | 24 GB     |
 
-**High CPU (Compute)**
-- `compute-large`  → 8 vCPU, 16 GB RAM
-- `compute-xlarge` → 16 vCPU, 32 GB RAM
+### High Memory
+
+| Size             | CPU | RAM    | Root Disk |
+|------------------|-----:|-------:|----------:|
+| `highmem-medium` | 2    | 24 GB  | 16 GB     |
+| `highmem-large`  | 4    | 48 GB  | 24 GB     |
+
+### High CPU (Compute)
+
+| Size             | CPU | RAM    | Root Disk |
+|------------------|-----:|-------:|----------:|
+| `compute-large`  | 8    | 16 GB  | 16 GB     |
+| `compute-xlarge` | 16   | 32 GB  | 24 GB     |
 
 ## Variables
 
-| Name                | Type     | Default     | Description |
-|---------------------|----------|-------------|-----------|
-| `node_name`         | string   | -           | Proxmox node name |
-| `lxc_name`          | string   | -           | Hostname of the LXC |
-| `size`              | string   | `"small"`   | Preset size (see list above) |
-| `mount_points`      | list     | `[]`        | Additional volume mounts |
-| `ipv4_address`      | string   | `"dhcp"`    | IPv4 address with CIDR or `"dhcp"` |
-| `ipv4_gateway`      | string   | `""`        | IPv4 gateway (required for static IP) |
-| `ansible_pass`      | string   | -           | Root password (sensitive) |
-| `ansible_public_key`| string   | -           | SSH public key for root |
+| Name                  | Type           | Default     | Description |
+|-----------------------|----------------|-------------|-------------|
+| `node_name`           | string         | -           | Proxmox node name |
+| `lxc_name`            | string         | -           | Hostname of the LXC |
+| `size`                | string         | `"small"`   | Preset size (see tables above) |
+| `disk_size`           | number         | `0`         | Root disk size in GB; `0` uses the preset value |
+| `mount_points`        | list(object)   | `[]`        | Additional volume mounts |
+| `ipv4_address`        | string         | `"dhcp"`    | IPv4 address with CIDR or `"dhcp"` |
+| `ipv4_gateway`        | string         | `""`        | IPv4 gateway (required for static IP) |
+| `ansible_pass`        | string         | -           | Root password (sensitive) |
+| `ansible_public_key`  | string         | -           | SSH public key for root |
+| `tags`                | list(string)   | `[]`        | Additional tags to apply to the LXC |
 
 
 **Mount point example:**
@@ -65,8 +76,6 @@ mount_points = [
   { volume = "local-lvm:subvol-xxx", size = "50G", path = "/mnt/data" }
 ]
 ```
-
-Root disk is fixed at **8 GB** (OS + logs only). Apps should use `mount_points`.
 
 ## Requirements
 
