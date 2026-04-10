@@ -19,6 +19,12 @@ variable "size" {
   }
 }
 
+variable "disk_size" {
+  description = "Root disk size in GB. Defaults to preset value."
+  type        = number
+  default     = 0 # 0 = use preset
+}
+
 variable "mount_points" {
   description = "List of additional mount points to create in the LXC"
   type = list(object({
