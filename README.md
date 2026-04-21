@@ -6,15 +6,12 @@ Terraform module to create reproducible Debian LXC containers on Proxmox with pr
 
 ```hcl
 module "lxc" {
-  source = "./modules/lxc"
+  source = "git::git@gitlab.int.jrtashjian.com:homelab/tfmod-proxmox-lxc.git"
 
-  size            = "medium"
-  lxc_name        = "my-app"
-  node_name       = "pve1"
-  ipv4_address    = "192.168.10.50/24"
-  ipv4_gateway    = "192.168.10.1"
-  ansible_pass    = var.ansible_pass
-  ansible_public_key = var.ansible_public_key
+  node_name = "pve-node02"
+  lxc_name  = "my-app"
+
+  size = "medium"
 
   mount_points = [
     {
@@ -23,6 +20,11 @@ module "lxc" {
       path   = "/mnt/data"
     }
   ]
+
+  ipv4_address       = "192.168.10.50/24"
+  ipv4_gateway       = "192.168.10.1"
+  ansible_pass       = var.ansible_pass
+  ansible_public_key = var.ansible_public_key
 }
 ```
 
