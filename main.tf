@@ -2,11 +2,7 @@ terraform {
   required_providers {
     proxmox = {
       source  = "bpg/proxmox"
-      version = "0.101.0"
-    }
-    random = {
-      source  = "hashicorp/random"
-      version = "3.8.1"
+      version = ">= 0.103.0"
     }
   }
 }
@@ -31,14 +27,6 @@ locals {
 
   # Use override if provided, otherwise preset
   effective_disk = var.disk_size > 0 ? var.disk_size : local.presets[var.size].disk
-}
-
-resource "random_id" "suffix" {
-  byte_length = 4
-  keepers = {
-    base_name = var.lxc_name
-    size      = var.size
-  }
 }
 
 resource "proxmox_virtual_environment_container" "base_lxc" {
@@ -75,7 +63,7 @@ resource "proxmox_virtual_environment_container" "base_lxc" {
   }
 
   initialization {
-    hostname = "${var.lxc_name}-${random_id.suffix.hex}"
+    hostname = var.lxc_name
 
     ip_config {
       ipv4 {
