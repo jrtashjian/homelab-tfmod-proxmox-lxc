@@ -56,18 +56,19 @@ module "lxc" {
 
 ## Variables
 
-| Name                  | Type           | Default     | Description |
-|-----------------------|----------------|-------------|-------------|
-| `node_name`           | string         | -           | Proxmox node name |
-| `lxc_name`            | string         | -           | Hostname of the LXC |
-| `size`                | string         | `"small"`   | Preset size (see tables above) |
-| `disk_size`           | number         | `0`         | Root disk size in GB; `0` uses the preset value |
-| `mount_points`        | list(object)   | `[]`        | Additional volume mounts |
-| `ipv4_address`        | string         | `"dhcp"`    | IPv4 address with CIDR or `"dhcp"` |
-| `ipv4_gateway`        | string         | `""`        | IPv4 gateway (required for static IP) |
-| `ansible_pass`        | string         | -           | Root password (sensitive) |
-| `ansible_public_key`  | string         | -           | SSH public key for root |
-| `tags`                | list(string)   | `[]`        | Additional tags to apply to the LXC |
+| Name                  | Type           | Default      | Description |
+|-----------------------|----------------|--------------|-------------|
+| `node_name`           | string         | -            | Proxmox node name |
+| `lxc_name`            | string         | -            | Hostname of the LXC |
+| `size`                | string         | `"small"`    | Preset size (see tables above) |
+| `disk_size`           | number         | `0`          | Root disk size in GB; `0` uses the preset value |
+| `mount_points`        | list(object)   | `[]`         | Additional volume mounts |
+| `root_datastore_id`   | string         | `"machines"` | Datastore ID for the root disk |
+| `ipv4_address`        | string         | `"dhcp"`     | IPv4 address with CIDR or `"dhcp"` |
+| `ipv4_gateway`        | string         | `""`         | IPv4 gateway (required for static IP) |
+| `ansible_pass`        | string         | -            | Root password (sensitive) |
+| `ansible_public_key`  | string         | -            | SSH public key for root |
+| `tags`                | list(string)   | `[]`         | Additional tags to apply to the LXC |
 
 
 **Mount point example:**

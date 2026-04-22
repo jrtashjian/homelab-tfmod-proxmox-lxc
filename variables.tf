@@ -35,6 +35,12 @@ variable "mount_points" {
   default = []
 }
 
+variable "root_datastore_id" {
+  description = "The datastore ID for the root disk"
+  type        = string
+  default     = "machines"
+}
+
 variable "ipv4_address" {
   description = "The IPv4 address to assign to the LXC"
   type        = string

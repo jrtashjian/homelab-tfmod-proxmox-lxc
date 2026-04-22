@@ -42,7 +42,7 @@ resource "proxmox_virtual_environment_container" "base_lxc" {
   }
 
   disk {
-    datastore_id = "machines"
+    datastore_id = var.root_datastore_id
     size         = local.effective_disk
   }
 
