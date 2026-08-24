@@ -86,22 +86,10 @@ resource "proxmox_virtual_environment_container" "base_lxc" {
 
   operating_system {
     type             = "debian"
-    template_file_id = proxmox_virtual_environment_file.debian_container_template.id
+    template_file_id = "local:vztmpl/debian-13-standard_13.1-2_amd64.tar.zst"
   }
-
-  depends_on = [proxmox_virtual_environment_file.debian_container_template]
 
   lifecycle {
     ignore_changes = [description]
-  }
-}
-
-resource "proxmox_virtual_environment_file" "debian_container_template" {
-  content_type = "vztmpl"
-  datastore_id = "local"
-  node_name    = var.node_name
-
-  source_file {
-    path = "http://download.proxmox.com/images/system/debian-13-standard_13.1-2_amd64.tar.zst"
   }
 }
