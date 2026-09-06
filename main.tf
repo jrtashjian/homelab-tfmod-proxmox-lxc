@@ -30,8 +30,13 @@ locals {
 }
 
 resource "proxmox_virtual_environment_container" "base_lxc" {
-  node_name = var.node_name
-  tags      = concat(["terraform", var.size], var.tags)
+  node_name    = var.node_name
+  tags         = concat(["terraform", var.size], var.tags)
+  unprivileged = true
+
+  wait_for_ip {
+    ipv4 = true
+  }
 
   cpu {
     cores = local.presets[var.size].cpu
@@ -59,11 +64,13 @@ resource "proxmox_virtual_environment_container" "base_lxc" {
 
   network_interface {
     name     = "eth0"
+    bridge   = var.bridge
+    vlan_id  = var.vlan_id
     firewall = true
   }
 
   initialization {
-    hostname = var.lxc_name
+    hostname = var.name
 
     ip_config {
       ipv4 {
@@ -82,14 +89,8 @@ resource "proxmox_virtual_environment_container" "base_lxc" {
     nesting = true
   }
 
-  unprivileged = true
-
   operating_system {
     type             = "debian"
-    template_file_id = "local:vztmpl/debian-13-standard_13.1-2_amd64.tar.zst"
-  }
-
-  lifecycle {
-    ignore_changes = [description]
+    template_file_id = var.os_template
   }
 }

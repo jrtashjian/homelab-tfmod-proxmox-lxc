@@ -3,9 +3,15 @@ variable "node_name" {
   type        = string
 }
 
-variable "lxc_name" {
+variable "name" {
   description = "The name of the LXC to create"
   type        = string
+}
+
+variable "os_template" {
+  description = "The OS template file ID to create the LXC from"
+  type        = string
+  default     = "local:vztmpl/debian-13-standard_13.1-2_amd64.tar.zst"
 }
 
 variable "size" {
@@ -41,6 +47,18 @@ variable "root_datastore_id" {
   default     = "machines"
 }
 
+variable "bridge" {
+  description = "Network bridge for the primary interface"
+  type        = string
+  default     = "vmbr0"
+}
+
+variable "vlan_id" {
+  description = "VLAN ID for the primary interface. Null means untagged."
+  type        = number
+  default     = null
+}
+
 variable "ipv4_address" {
   description = "The IPv4 address to assign to the LXC"
   type        = string
@@ -50,7 +68,7 @@ variable "ipv4_address" {
 variable "ipv4_gateway" {
   description = "The IPv4 gateway to assign to the LXC"
   type        = string
-  default     = ""
+  default     = null
 }
 
 variable "ansible_pass" {
